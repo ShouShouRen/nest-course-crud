@@ -1,5 +1,6 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
 
 ConfigModule.forRoot({
   isGlobal: true,
@@ -17,4 +18,10 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   autoLoadEntities: true,
   synchronize: true,
+};
+
+export const jwtConfig: JwtModule = {
+  secret: configService.get<string>('JWT_SECRET'),
+  signOptions: { expiresIn: '1h' },
+  global: true,
 };
