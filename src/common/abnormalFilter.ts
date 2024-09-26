@@ -11,9 +11,8 @@ export class AbnormalFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const status = exception.getStatus();
-    const message = exception.message
-      ? exception.message
-      : 'Internal server error';
+    const message =
+      exception.getResponse().message || exception.getResponse().error;
     response.status(status).json({
       code: status,
       data: null,
